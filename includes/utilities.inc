@@ -50,7 +50,7 @@ function hmc2json($input_file) {
   $module_path = drupal_get_path('module', 'agile_harris_matrix');
   $path = DRUPAL_ROOT . '/' . "$module_path/python";
   $script = "$path/hmc2json.py";
-  $executable = "/usr/bin/python";
+  $executable = variable_get('agile_harris_matrix_executable_path', '/usr/bin/python');;
   $output_file = drupal_tempnam('/tmp', 'hm');
   $ret = 0;
   $command = "{$executable} {$script} {$input_file} {$output_file}  2>&1";
