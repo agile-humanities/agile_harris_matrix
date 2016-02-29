@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Utility functions for this module.
@@ -50,7 +51,8 @@ function hmc2json($input_file) {
   $module_path = drupal_get_path('module', 'agile_harris_matrix');
   $path = DRUPAL_ROOT . '/' . "$module_path/python";
   $script = "$path/hmc2json.py";
-  $executable = variable_get('agile_harris_matrix_executable_path', '/usr/bin/python');;
+  $executable = variable_get('agile_harris_matrix_executable_path', '/usr/bin/python');
+  ;
   $output_file = drupal_tempnam('/tmp', 'hm');
   $ret = 0;
   $command = "{$executable} {$script} {$input_file} {$output_file}  2>&1";
@@ -68,4 +70,27 @@ function agile_harris_matrix_get_term() {
   $key = key($terms);
   $path = taxonomy_term_uri($terms[$key]);
   echo drupal_get_path_alias($path['path']);
+}
+
+/**
+ * Gets all type terms from harris matrix json file.
+ *
+ * @param int $nid
+ *   NID of harris matris node
+ *
+ * @return array
+ *   All terms from node
+ */
+function agile_harris_get_terms($nid) {
+  $node = node_load($nid);
+  $wrapper = entity_metadata_wrapper('node', $node);
+  $values = $wrapper->field_json->value();
+  $json = file_get_contents($values['uri']);
+  $array = drupal_json_decode($json);
+  $children = $array['children'];
+  $terms = array();
+  foreach($children as $child) {
+    $terms[] = $child['type'];
+  }
+  return array_unique($terms);
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * The theme system, which controls the output of Drupal.
@@ -22,18 +23,18 @@ function agile_harris_matrix_preprocess_agile_harris_matrix(&$variables) {
   drupal_add_css("$path/js/tooltipster-master/css/themes/tooltipster-noir.css");
   drupal_add_css("$path/js/tooltipster-master/css/themes/tooltipster-punk.css");
   drupal_add_css("$path/js/tooltipster-master/css/themes/tooltipster-shadow.css");
-
+  $vocabs = taxonomy_get_vocabularies();
   $node = node_load($variables['nid']);
   $wrapper = entity_metadata_wrapper('node', $node);
-  $term_object = $wrapper->field_taxonomy->value();
-  $term = taxonomy_term_load($term_object->tid);
-  $vocabulary = taxonomy_vocabulary_machine_name_load($term->name);
-  $terms = taxonomy_get_tree($vocabulary->vid);
-  $query = new EntityFieldQuery();
-  $result = $query
-      ->entityCondition('entity_type', 'taxonomy_term')
-      ->propertyCondition('vid', (int) $vocabulary->vid, '=')
-      ->execute();
+  $term = $wrapper->field_taxonomy->value();
+  foreach ($vocabs as $vocab) {
+    if ($vocab->name == $term->name) {
+      $vocabulary = taxonomy_vocabulary_machine_name_load($vocab->machine_name);
+    }
+  }
+  if (!$vocabulary) {
+    $vocabulary = taxonomy_vocabulary_machine_name_load('default_matrix_vocabulary');
+  }
 
   drupal_add_js("$path/js/agile_harris_matrix.js");
   drupal_add_js("$path/js/klayjs-d3/dist/klayjs-d3-ww.js");

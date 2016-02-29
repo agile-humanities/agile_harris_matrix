@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Installs this module.
@@ -387,16 +388,38 @@ function _agile_harris_matrix_get_data() {
  * Implements hook_install().
  */
 function agile_harris_matrix_install() {
-  $machine_name = 'matrix_vocabularies';
-  $vocab = taxonomy_vocabulary_machine_name_load($machine_name);
-  if (!$vocab) {
-    $new_vocab = (object) array(
-          'name' => 'Matrix Vocabularies',
-          'description' => 'Vocabularies for Matrix visualizations',
-          'machine_name' => $machine_name,
-    );
-    taxonomy_vocabulary_save($new_vocab);
+  // Create Vocabulary container.
+  $matrix_vocabulary = taxonomy_vocabulary_machine_name_load('matrix_vocabularies');
+  if (!$matrix_vocabulary) {
+    $matrix_vocabulary = new stdClass();
+    $matrix_vocabulary->name = 'Matrix Vocabularies';
+    $matrix_vocabulary->machine_name = 'matrix_vocabularies';
+    taxonomy_vocabulary_save($matrix_vocabulary);
   }
+
+  // Create default vocabulary
+  $default = taxonomy_vocabulary_machine_name_load('default_matrix_vocabulary');
+  if (!$default) {
+    $default = new stdClass();
+    $default->name = 'Default Matrix Vocabulary';
+    $default->machine_name = 'default_matrix_vocabulary';
+    taxonomy_vocabulary_save($default);
+    taxonomy_term_save((object) array(
+          'name' => 'Default Matrix Vocabulary',
+          'vid' => $matrix_vocabulary->vid,
+    ));
+  }
+
+  // Add default terms
+  $terms = array('PERIOD_GROUP', 'TOP_SURFACE', 'GEOLOGY', 'UNEXCAVATED', 'DEPOSIT');
+
+  foreach ($terms as $term) {
+    taxonomy_term_save((object) array(
+          'name' => $term,
+          'vid' => $default->vid,
+    ));
+  }
+
   $data = _agile_harris_matrix_get_data();
   if (isset($data) && is_array($data)) {
     $modules = module_list();
