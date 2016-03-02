@@ -49,7 +49,8 @@ function agile_harris_matrix_preprocess_agile_harris_matrix(&$variables) {
   $json = $wrapper->field_json->value();
 
   if (!$json) {
-    $xml_uri = $wrapper->field_hmc->value()['uri'];
+    $values = $wrapper->field_hmc->value();
+    $xml_uri = $values['uri'];
     $realpath = drupal_realpath($xml_uri);
     $data = hmc2json($realpath);
     $unique_id = uniqid();

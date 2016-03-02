@@ -52,7 +52,6 @@ function hmc2json($input_file) {
   $path = DRUPAL_ROOT . '/' . "$module_path/python";
   $script = "$path/hmc2json.py";
   $executable = variable_get('agile_harris_matrix_executable_path', '/usr/bin/python');
-  ;
   $output_file = drupal_tempnam('/tmp', 'hm');
   $ret = 0;
   $command = "{$executable} {$script} {$input_file} {$output_file}  2>&1";
@@ -68,7 +67,7 @@ function agile_harris_matrix_get_term() {
   $term = $_POST['term'];
   $terms = taxonomy_get_term_by_name($term, $vocabulary);
   $key = key($terms);
-  $path = taxonomy_term_uri($terms[$key]);
+  $path = $key ? taxonomy_term_uri($terms[$key]): '';
   echo drupal_get_path_alias($path['path']);
 }
 
