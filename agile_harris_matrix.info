@@ -1,5 +1,7 @@
 name = Agile Harris Matrix
 package = Agile Humanities
 description = D3 Harris Matrix Visualizations.
+dependencies[] = bundle_copy
+
 core = 7.x
 
