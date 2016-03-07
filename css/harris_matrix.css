@@ -40,6 +40,7 @@ g.compound > rect {
     -webkit-box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
     -moz-box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+    width: 40%;
    
    
 }

@@ -63,6 +63,10 @@ function hmc2json($input_file) {
  * Callback to supply term to javascript.
  */
 function agile_harris_matrix_get_term() {
+  if (!isset( $_POST['vocabulary'])) {
+    $stop = 'here';
+    return;
+  }
   $vocabulary = $_POST['vocabulary'];
   $term = $_POST['term'];
   $terms = taxonomy_get_term_by_name($term, $vocabulary);
@@ -89,7 +93,7 @@ function agile_harris_get_terms($nid) {
   $children = $array['children'];
   $terms = array();
   foreach($children as $child) {
-    $terms[] = $child['type'];
+    $terms[] = $child['id'];
   }
   return array_unique($terms);
 }

@@ -15,7 +15,7 @@ function agile_harris_matrix_preprocess_agile_harris_matrix(&$variables) {
   module_load_include('inc', 'agile_harris_matrix', 'includes/utilities');
   $path = drupal_get_path('module', 'agile_harris_matrix');
   drupal_add_css("$path/css/harris_matrix.css");
-  drupal_add_css("doc/css/reset.css");
+  //drupal_add_css("doc/css/reset.css");
   drupal_add_css("$path/js/tooltipster-master/doc/css/prettify.css");
   drupal_add_css("$path/js/tooltipster-master/doc/css/style.css");
   drupal_add_css("$path/js/tooltipster-master/css/tooltipster.css");
@@ -47,13 +47,6 @@ function agile_harris_matrix_preprocess_agile_harris_matrix(&$variables) {
   drupal_add_js("$path/js/tooltipster-master/doc/js/lang-css.js");
   drupal_add_js("$path/js/tooltipster-master/js/jquery.tooltipster.js");
   $json = $wrapper->field_json->value();
-  $tree = taxonomy_get_tree($vocabulary->vid);
-  $current = array();
-  foreach ($tree as $branch) {
-    $current[] = $branch->name;
-  }
-  $candidates = agile_harris_get_terms($wrapper->getIdentifier());
-  $new_terms = array_diff($candidates, $current);
 
   if (!$json) {
     $values = $wrapper->field_hmc->value();
@@ -65,11 +58,21 @@ function agile_harris_matrix_preprocess_agile_harris_matrix(&$variables) {
     $wrapper->field_json->file->set($json_file);
     $wrapper->save();
     $json = $wrapper->field_json->value();
+    $tree = taxonomy_get_tree($vocabulary->vid);
+    $current = array();
+    foreach ($tree as $branch) {
+      $current[] = $branch->name;
+    }
+    $candidates = agile_harris_get_terms($wrapper->getIdentifier());
+    $new_terms = array_diff($candidates, $current);
     foreach ($new_terms as $new_term) {
-      taxonomy_term_save((object) array(
-            'name' => $new_term,
-            'vid' => $vocabulary->vid,
-      ));
+      $test = taxonomy_get_term_by_name($new_term);
+      if (!$test) {
+        taxonomy_term_save((object) array(
+              'name' => $new_term,
+              'vid' => $vocabulary->vid,
+        ));
+      }
     }
   }
   if (!isset($json['uri'])) {

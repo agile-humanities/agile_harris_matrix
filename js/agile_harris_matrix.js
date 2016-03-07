@@ -54,6 +54,7 @@
             });
 
             $('#tax_link').tooltipster({
+                theme: 'tooltipster-light',
                 contentAsHTML: true,
                 interactive: true,
                 animation: 'fade',
@@ -119,18 +120,18 @@
                                     return "node leaf";
                             })
                             .on("mouseover", function (d) {
+                                console.log(callback_url);
                                 $.ajax({
                                     url: callback_url,
                                     type: "POST",
                                     data: {
                                         vocabulary: Drupal.settings.agile_harris_matrix.vocabulary,
-                                        term: d.type
+                                        term: d.id
 
                                     },
                                     async: false,
                                     success: function (results, status, xhr) {
                                         tax_path = results;
-                                        console.log(tax_path);
                                     },
                                     error: function (data, status, xhd) {
                                         console.log("The function execute_callback has failed");
@@ -138,11 +139,11 @@
                                 });
 
 
-                                $('#tax_link').tooltipster('content', '<a href = " '+ Drupal.settings.basePath + tax_path + '">More about '+ d.type + '</a>');
+                                $('#tax_link').tooltipster('content', '<a href = " '+ Drupal.settings.basePath + tax_path + '">More about '+ d.id + '</a>');
                                 $('#tax_link').css({
-                                    'position': 'absolute',
-                                    'left': event.pageX,
-                                    'top': event.pageY
+                                    'position': 'relative',
+                                    'left': (d3.event.pageX - 430) + "px",
+                                    'top': (d3.event.pageY - 300) + "px"
                                 }).html("<strong>ID:</strong>" + d.id + "<br>" +
                                         "<strong>Name</strong>: " + d.name + "<br>" +
                                         "<strong>Description</strong>: " + d.description + "<br>" +
