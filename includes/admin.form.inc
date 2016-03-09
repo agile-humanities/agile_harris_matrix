@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * The admin form for Agile Harris Matrix module.
@@ -38,9 +39,18 @@ function agile_harris_matrix_admin_form($form, $form_state) {
   $form['agile_harris_matrix_wrapper']['agile_harris_matrix_path_check'] = array(
     '#markup' => $conf_message,
   );
-
-  $form['buttons']['submit'] = array('#type' => 'submit', '#value' => t('Save Configuration'));
-  return $form;
+  $form['agile_matrix_x'] = array(
+    '#type' => 'textfield',
+    '#title' => "horizontal offset",
+    '#default_value' => variable_get('agile_matrix_x', '-430'),
+  );
+  $form['agile_matrix_y'] = array(
+    '#type' => 'textfield',
+    '#title' => "vertical offset",
+    '#default_value' => variable_get('agile_matrix_y', '-600'),
+  );
+  
+  return system_settings_form($form);
 }
 
 /**

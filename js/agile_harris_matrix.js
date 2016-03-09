@@ -142,8 +142,8 @@
                                 $('#tax_link').tooltipster('content', '<a href = " '+ Drupal.settings.basePath + tax_path + '">More about '+ d.id + '</a>');
                                 $('#tax_link').css({
                                     'position': 'relative',
-                                    'left': (d3.event.pageX - 430) + "px",
-                                    'top': (d3.event.pageY - 300) + "px"
+                                    'left': (d3.event.pageX + Number(Drupal.settings.agile_harris_matrix.x_offset)) + "px",
+                                    'top': (d3.event.pageY + Number(Drupal.settings.agile_harris_matrix.y_offset)) + "px"
                                 }).html("<strong>ID:</strong>" + d.id + "<br>" +
                                         "<strong>Name</strong>: " + d.name + "<br>" +
                                         "<strong>Description</strong>: " + d.description + "<br>" +

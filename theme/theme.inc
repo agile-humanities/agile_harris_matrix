@@ -80,6 +80,13 @@ function agile_harris_matrix_preprocess_agile_harris_matrix(&$variables) {
     $json['uri'] = $file_object->uri;
   }
   $url = file_create_url($json['uri']);
-  drupal_add_js(array('agile_harris_matrix' => array('json_address' => $url, 'vocabulary' => $vocabulary->machine_name)), array('type' => 'setting'));
+  $x = variable_get('agile_matrix_x', -430);
+  $y = variable_get('agile_matrix_y', -600);
+  drupal_add_js(array('agile_harris_matrix' => array(
+      'x_offset' => variable_get('agile_matrix_x', -430),
+      'y_offset' => variable_get('agile_matrix_y', -600),
+      'json_address' => $url,
+      'vocabulary' => $vocabulary->machine_name),
+      ), array('type' => 'setting'));
   $variables['title'] = $node->title;
 }
