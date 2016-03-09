@@ -40,13 +40,15 @@ function agile_harris_matrix_admin_form($form, $form_state) {
     '#markup' => $conf_message,
   );
   $form['agile_matrix_x'] = array(
+    '#description' => t('Relative horizontal position of info box in pixels.'),
     '#type' => 'textfield',
-    '#title' => "horizontal offset",
+    '#title' => "Horizontal offset",
     '#default_value' => variable_get('agile_matrix_x', '-430'),
   );
   $form['agile_matrix_y'] = array(
+    '#description' => t('Relative vertical position of info box in pixels.'),
     '#type' => 'textfield',
-    '#title' => "vertical offset",
+    '#title' => "Vertical offset",
     '#default_value' => variable_get('agile_matrix_y', '-600'),
   );
   
