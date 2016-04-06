@@ -48,18 +48,9 @@
 
 
 // load data and render elements
-            $('#tooltip').tooltipster({
-                contentAsHTML: true,
-                interactive: true
-            });
 
-            $('#tax_link').tooltipster({
-                theme: 'tooltipster-light',
-                contentAsHTML: true,
-                interactive: true,
-                animation: 'fade',
-                delay: 200
-            });
+
+ 
             d3.json(Drupal.settings.agile_harris_matrix.json_address, function (error, graph) {
 
                 layouter.on("finish", function (d) {
@@ -139,7 +130,7 @@
                                 });
 
 
-                                $('#tax_link').tooltipster('content', '<a href = " '+ Drupal.settings.basePath + tax_path + '">More about '+ d.id + '</a>');
+                                //$('#tax_link').tooltipster('content', '<a href = " '+ Drupal.settings.basePath + tax_path + '">More about '+ d.id + '</a>');
                                 $('#tax_link').css({
                                     'position': 'relative',
                                     'left': (d3.event.pageX + Number(Drupal.settings.agile_harris_matrix.x_offset)) + "px",
@@ -147,7 +138,8 @@
                                 }).html("<strong>ID:</strong>" + d.id + "<br>" +
                                         "<strong>Name</strong>: " + d.name + "<br>" +
                                         "<strong>Description</strong>: " + d.description + "<br>" +
-                                        "<strong>Type</strong>: " + d.type).show();
+                                        "<strong>Type</strong>: " + d.type + "<br>" +
+                                        '<a href = " '+ Drupal.settings.basePath + tax_path + '">More about '+ d.id + '</a>').show();
                             })
 
 
@@ -199,10 +191,7 @@
                 });
 
                 layouter.kgraph(graph);
-                $('.interactive_hover').tooltipster({
-                    contentAsHTML: true,
-                    interactive: true
-                });
+;
             });
 
             function redraw() {

@@ -18,11 +18,6 @@ function agile_harris_matrix_preprocess_agile_harris_matrix(&$variables) {
   //drupal_add_css("doc/css/reset.css");
   drupal_add_css("$path/js/tooltipster-master/doc/css/prettify.css");
   drupal_add_css("$path/js/tooltipster-master/doc/css/style.css");
-  drupal_add_css("$path/js/tooltipster-master/css/tooltipster.css");
-  drupal_add_css("$path/js/tooltipster-master/css/themes/tooltipster-light.css");
-  drupal_add_css("$path/js/tooltipster-master/css/themes/tooltipster-noir.css");
-  drupal_add_css("$path/js/tooltipster-master/css/themes/tooltipster-punk.css");
-  drupal_add_css("$path/js/tooltipster-master/css/themes/tooltipster-shadow.css");
   $vocabs = taxonomy_get_vocabularies();
   $node = node_load($variables['nid']);
   $wrapper = entity_metadata_wrapper('node', $node);
@@ -41,11 +36,6 @@ function agile_harris_matrix_preprocess_agile_harris_matrix(&$variables) {
   drupal_add_js("$path/js/klayjs-d3/dist/klayjs-d3.js");
   drupal_add_js("$path/library/klayjs-d3/node_modules/klayjs/klay.js");
   drupal_add_js("$path/library/d3.js");
-
-  drupal_add_js("$path/js/tooltipster-master/doc/js/jquery.jgfeed.js");
-  drupal_add_js("$path/js/tooltipster-master/doc/js/prettify.js");
-  drupal_add_js("$path/js/tooltipster-master/doc/js/lang-css.js");
-  drupal_add_js("$path/js/tooltipster-master/js/jquery.tooltipster.js");
   $json = $wrapper->field_json->value();
 
   if (!$json) {
